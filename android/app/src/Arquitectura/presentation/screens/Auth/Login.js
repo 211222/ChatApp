@@ -47,11 +47,7 @@ function Login() {
         }
 
         // Verificación del código TOTP
-        const isValidTOTP = await verifyTOTPCode(authCode, userData.uid);
-        if (!isValidTOTP) {
-          SimpleToast.show('Invalid Authentication Code!');
-          return false;
-        }
+     
 
         dispatch(setUser(userData));
         await Auth.setAccount(userData);
@@ -62,25 +58,7 @@ function Login() {
       });
   };
 
-  const verifyTOTPCode = async (code, uid) => {
-    try {
-      const response = await fetch('https://<YOUR_BACKEND_URL>/verify-totp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          code,
-          uid,
-        }),
-      });
-      const result = await response.json();
-      return result.success;
-    } catch (error) {
-      console.error('Error verifying TOTP code:', error);
-      return false;
-    }
-  };
+ 
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
